@@ -1,9 +1,9 @@
-﻿import random
+import random
 from affiche_dot import *
 
 GAUCHE = 0
 DROITE= 1
-
+compteur=0
 
 def lire_mots():
     with open("liste_mot.txt","r",encoding="utf-8") as fichier:
@@ -23,30 +23,34 @@ class ABR:
         self.value = mot
         self.fils = [None, None]
 
-    def est_feuille(self):
-        if self.fils[GAUCHE] and self.fils[DROITE]:
+    def presence_fils(self):
+        if self.fils[GAUCHE]==None and self.fils[DROITE]==None:
            return False
         else:
              return True
 
     def hauteur(self):
         if MOTS == 0:
-           return None
+           return "Hauteur Nulle, Arbre vide"
         else:
              pass
 
     def ajouter(self, mot):
-        if self.est_feuille()==False:
-           self.value=mot
-           return(self.value)
+        global compteur
+        if compteur==0:
+        #if self.presence_fils()==False:
+            self.value=mot
         else:
-             mot=temp
-             self.value=temp
-             if temp >
-             self.value
-
-        self.fils[GAUCHE]
-        self.fils[DROITE]
+             if mot > self.value:
+                if self.fils[DROITE]!=None:
+                    pass
+                else:
+                    self.fils[DROITE]=mot
+             else:
+                if self.fils[GAUCHE]!=None:
+                    pass
+                else:
+                    self.fils[GAUCHE]=mot
 
     def nb_operation_pour_trouver(self, mot):
         # compte le nombre d'operation pour trouver le mot dans l'ABR
@@ -72,21 +76,26 @@ class ABR:
         return contenu, id_noeud
 
 def trouver_lineaire(mot):
-    # for i in range(...):
-    #    ...
-    pass
+    liste=lire_mots()
+    for i in range(len(liste)):
+        if liste[i]==mot:
+            return i
 
 print("Nombre de mot :", len(MOTS))
+
 
 arbre = ABR()
 for mot in MOTS:
     arbre.ajouter(mot)
+    compteur+=1
+print(compteur)
 
 #creer_image_depuis_contenu("arbre", arbre.afficher())
 
 print("Hauteur :", arbre.hauteur())
-print("Nombre d'operation pour trouver avec ABR :", arbre.nb_operation_pour_trouver("pirate"))
-print("Nombre d'operation pour trouver dans la liste :", trouver_lineaire("pirate"))
-#print(lire_mots())
+print("Nombre d'operation pour trouver avec ABR :", arbre.nb_operation_pour_trouver("abaissa"))
+print("Nombre d'operation pour trouver dans la liste :", trouver_lineaire("abaissa"))
+
+print(lire_mots())
 
 #comparer mot avec self.value
