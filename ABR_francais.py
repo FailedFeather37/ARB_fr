@@ -88,3 +88,5 @@ print("Hauteur :", arbre.hauteur())
 print("Nombre d'operation pour trouver avec ABR :", arbre.nb_operation_pour_trouver("pirate"))
 print("Nombre d'operation pour trouver dans la liste :", trouver_lineaire("pirate"))
 #print(lire_mots())
+
+#comparer mot avec self.value
