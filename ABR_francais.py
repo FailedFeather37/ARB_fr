@@ -3,7 +3,7 @@ from affiche_dot import *
 
 GAUCHE = 0
 DROITE= 1
-compteur=0
+c=0
 
 def lire_mots():
     with open("liste_mot.txt","r",encoding="utf-8") as fichier:
@@ -29,30 +29,35 @@ class ABR:
         else:
              return True
 
-    def hauteur(self):
+    def hauteur(self,test):
+        global c
         if MOTS == 0:
-           return "Hauteur Nulle, Arbre vide"
+           return 0
         else:
              pass
+             while c!=20:
+                   pass
 
     def ajouter(self, mot):
-        global compteur
-        if compteur==0:
-        #if self.presence_fils()==False:
+        if self.value==None:
             self.value=mot
         else:
              if mot > self.value:
                 if self.fils[DROITE]!=None:
-                    pass
+                   self.fils[DROITE].ajouter(mot)
                 else:
-                    self.fils[DROITE]=mot
+                     abr=ABR(mot)
+                     self.fils[DROITE]=abr
              else:
                 if self.fils[GAUCHE]!=None:
-                    pass
+                   self.fils[GAUCHE].ajouter(mot)
                 else:
-                    self.fils[GAUCHE]=mot
+                     abr=ABR(mot)
+                     self.fils[GAUCHE]=abr
+
 
     def nb_operation_pour_trouver(self, mot):
+
         # compte le nombre d'operation pour trouver le mot dans l'ABR
         pass
 
@@ -86,16 +91,11 @@ print("Nombre de mot :", len(MOTS))
 
 arbre = ABR()
 for mot in MOTS:
+    c+=1
     arbre.ajouter(mot)
-    compteur+=1
-print(compteur)
 
-#creer_image_depuis_contenu("arbre", arbre.afficher())
+creer_image_depuis_contenu("arbre", arbre.afficher())
 
-print("Hauteur :", arbre.hauteur())
+print("Hauteur :", arbre.hauteur(4))
 print("Nombre d'operation pour trouver avec ABR :", arbre.nb_operation_pour_trouver("abaissa"))
 print("Nombre d'operation pour trouver dans la liste :", trouver_lineaire("abaissa"))
-
-print(lire_mots())
-
-#comparer mot avec self.value
