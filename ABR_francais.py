@@ -3,12 +3,11 @@ from affiche_dot import *
 
 GAUCHE = 0
 DROITE= 1
-c=0
 
 def lire_mots():
     with open("liste_mot.txt","r",encoding="utf-8") as fichier:
          mots=[]
-         for i in range(20):
+         for i in range(1000):
              l=fichier.readline()
              l=l.strip()
              mots.append(l)
@@ -23,20 +22,19 @@ class ABR:
         self.value = mot
         self.fils = [None, None]
 
-    def presence_fils(self):
+    def est_vide(self):
         if self.fils[GAUCHE]==None and self.fils[DROITE]==None:
-           return False
+           return True
         else:
-             return True
+             return False
 
-    def hauteur(self,test):
-        global c
-        if MOTS == 0:
-           return 0
+    def hauteur(self):
+        if self.est_vide():
+            return 0
         else:
-             pass
-             while c!=20:
-                   pass
+            hauteur_gauche = self.fils[GAUCHE].hauteur() if self.fils[GAUCHE] else 0
+            hauteur_droite = self.fils[DROITE].hauteur() if self.fils[DROITE] else 0
+            return 1 + max(hauteur_gauche, hauteur_droite)
 
     def ajouter(self, mot):
         if self.value==None:
@@ -57,16 +55,30 @@ class ABR:
 
 
     def nb_operation_pour_trouver(self, mot):
+        if self.value == mot:
+            return 1
 
-        # compte le nombre d'operation pour trouver le mot dans l'ABR
-        pass
+        cote = GAUCHE
+        if mot > self.value:
+            cote = DROITE
 
+        if not self.fils[cote]:
+            return None
+
+        resultat = self.fils[cote].nb_operation_pour_trouver(mot)
+        if resultat is not None:
+            return 1 + resultat
+        else:
+            return None
+        
+        
     def afficher(self):
         contenu, _ = self.afficher_interne(0)
         return contenu
 
     def afficher_interne(self, id_noeud):
         id_initial = id_noeud
+        
         contenu = str(id_initial) + '[label="' + self.value + '"]\n'
 
         if self.fils[GAUCHE]:
@@ -91,11 +103,10 @@ print("Nombre de mot :", len(MOTS))
 
 arbre = ABR()
 for mot in MOTS:
-    c+=1
     arbre.ajouter(mot)
 
 creer_image_depuis_contenu("arbre", arbre.afficher())
 
-print("Hauteur :", arbre.hauteur(4))
-print("Nombre d'operation pour trouver avec ABR :", arbre.nb_operation_pour_trouver("abaissa"))
-print("Nombre d'operation pour trouver dans la liste :", trouver_lineaire("abaissa"))
+print("Hauteur :", arbre.hauteur())
+print("Nombre d'operation pour trouver avec ABR :", arbre.nb_operation_pour_trouver("abois"))
+print("Nombre d'operation pour trouver dans la liste :", trouver_lineaire("abois"))
